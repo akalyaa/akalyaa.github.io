@@ -34,7 +34,7 @@
         }
         var dataFromChildIframe = event.data;
 
-        console.log(dataFromChildIframe);
+        console.log("Data from Child Iframe in Parent",dataFromChildIframe);
   
         $(".status-message").text("Data received! This status message will reset in 5 seconds.");
         if (dataFromChildIframe.user_age == 1) {
