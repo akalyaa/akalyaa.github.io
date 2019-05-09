@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +7,9 @@
 </head>
 <body>
 
-    <h1>Parent Window</h1>
-    <p>Send Message: <button id="message_button">Hi there iframe</button></p>
-    <p>Got Message:</p>
-    <div id="results"></div>
+    <h1 id="parentHeading"></h1>
+    <p>Set Chils Header: <input type="text" id="toChild"></input> <button id="message_button">From Child</button></p>
+
     <br/>
 
     <script>
@@ -32,15 +32,15 @@
         // Send a message to the child iframe
         var iframeEl = document.getElementById('the_iframe'),
             messageButton = document.getElementById('message_button'),
-            results = document.getElementById('results');
+            results= document.getElementById('parentHeading');
         // Send a message to the child iframe
         var sendMessage = function(msg) {
             // Make sure you are sending a string, and to stringify JSON
-            iframeEl.contentWindow.postMessage(msg, '*');
+            iframeEl.contentWindow.postMessage(msg, 'https://jemgj.github.io');
         };
         // Send random messge data on every button click
         bindEvent(messageButton, 'click', function (e) {
-            var random = Math.random();
+            var random = document.getElementById('toChild').value;
             sendMessage('' + random);
         });
         // Listen to message from child window
