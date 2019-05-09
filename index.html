@@ -1,42 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Parent Page</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <title>Parent Window</title>
 </head>
-<body style="padding: 2rem; min-width: 320px;">
-<div class="container">
-<div class="row">
-<div class="col">
-<h1 style="margin-bottom: 2rem;">Parent Page</h1>
-<hr style="margin-bottom: 2rem;">
-<div class="embed-responsive embed-responsive-16by9" style="border: 1px solid rgba(0,0,0,.1); border-radius: 0.25rem; min-height: 400px;">
-<iframe class="embed-responsive-item" src="https://jemgj.github.io"></iframe>
-</div>
-</div>
-</div>
-</div>
-<script type="text/javascript">
-    if (window.addEventListener) {
-        window.addEventListener("message", handleMessage);
-    } else {
-        window.attachEvent("onmessage", handleMessage);
-    }
-    function handleMessage(event) {
-        console.log("Received a message from " + event.origin + ".");
-        if (event.origin != "https://jemgj.github.io") {
-            console.log("The message came from some site we don't know. We're not processing it.");
-            return;
-        }
-        var dataFromChildIframe = event.data;
+<body>
 
-        console.log("Data from Child Iframe in Parent",dataFromChildIframe);
-  
-    }
-</script>
+    <h1>Parent Window</h1>
+    <p>Send Message: <button id="message_button">Hi there iframe</button></p>
+    <p>Got Message:</p>
+    <div id="results"></div>
+    <br/>
+
+    <script>
+        // addEventListener support for IE8
+        function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener){
+                element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
+        var iframeSource = 'https://gist.github.com/pbojinov/8965299/raw/fadf2c4058b6481646e7244994c1890f2ad81b60/iframe.html';
+        // Create the iframe
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('src', iframeSource);
+        iframe.setAttribute('id', 'the_iframe');
+        iframe.style.width = 450 + 'px';
+        iframe.style.height = 200 + 'px';
+        document.body.appendChild(iframe);
+        // Send a message to the child iframe
+        var iframeEl = document.getElementById('the_iframe'),
+            messageButton = document.getElementById('message_button'),
+            results = document.getElementById('results');
+        // Send a message to the child iframe
+        var sendMessage = function(msg) {
+            // Make sure you are sending a string, and to stringify JSON
+            iframeEl.contentWindow.postMessage(msg, '*');
+        };
+        // Send random messge data on every button click
+        bindEvent(messageButton, 'click', function (e) {
+            var random = Math.random();
+            sendMessage('' + random);
+        });
+        // Listen to message from child window
+        bindEvent(window, 'message', function (e) {
+            results.innerHTML = e.data;
+        });
+    </script>
 </body>
 </html>
