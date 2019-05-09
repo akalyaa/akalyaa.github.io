@@ -8,12 +8,18 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="padding: 2rem 0.25rem; background: #efefef;">
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <h1 id="parentHeading" style="font-size: 1.60rem; margin-bottom: 1.5rem;"></h1>
+    Set my Child Header: <input type="text"  class="form-control" id="toChild"></input> <button id="message_button" class="btn btn-success" >Set Child Header</button>
 
-    <h1 id="parentHeading" style="margin-bottom: 2rem;></h1>
-    <p>Set my Child Header: <input type="text"  class="form-control" id="toChild"></input> <button id="message_button" class="btn btn-lg btn-success" >Set Child Header</button>
-
-    <br/>
+   
+        </div>
+    </div>
+    </div>
+    
 
     <script>
         // addEventListener support for IE8
